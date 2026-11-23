@@ -32,6 +32,7 @@ spec:
                 gitlab_rails['gitlab_shell_ssh_port'] = 30022
                 nginx['listen_port'] = 80
                 nginx['listen_https'] = false
+                gitlab_rails['monitoring_whitelist'] = ['127.0.0.0/8', '::1/128', '10.244.0.0/16']
           ports:
             - containerPort: 80
             - containerPort: 22
