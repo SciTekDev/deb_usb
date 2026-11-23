@@ -39,6 +39,8 @@ apt update
 apt install -y nvidia-container-toolkit
 
 nvidia-ctk runtime configure --runtime=containerd --set-as-default
+# Toolkit 'auto' mode misses Debian's relocated 470 libraries (no libnvidia-ml in containers); legacy mode finds them
+sed -i 's/^mode = "auto"/mode = "legacy"/' /etc/nvidia-container-runtime/config.toml
 systemctl restart containerd
 
 echo "✓ Reboot, then verify with nvidia-smi."
