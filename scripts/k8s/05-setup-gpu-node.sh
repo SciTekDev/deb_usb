@@ -25,7 +25,9 @@ if lspci -d 10de: | grep -qiE 'GK210|Tesla K80'; then
 else
     drivers="nvidia-driver"
 fi
-apt install -y linux-headers-amd64 $drivers firmware-misc-nonfree
+apt install -y linux-headers-amd64 $drivers nvidia-persistenced firmware-misc-nonfree
+# Keep the driver loaded between jobs (starts at boot, once the module is available after the reboot)
+systemctl enable nvidia-persistenced
 
 echo "Installing NVIDIA container toolkit..."
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \

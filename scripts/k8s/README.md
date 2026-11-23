@@ -66,6 +66,14 @@ Plain `su` keeps your user's `PATH`, which has no `/sbin` or `/usr/sbin`, so scr
    kubectl apply -f manifests/nvidia-device-plugin.yaml
    ```
 
+   Then confirm GPU scheduling with the CUDA 11.4 test pod (the K80 advertises 2 GPUs; the pod uses one):
+
+   ```bash
+   kubectl apply -f manifests/cuda-test-pod.yaml
+   kubectl logs cuda-test      # should print the nvidia-smi table
+   kubectl delete pod cuda-test
+   ```
+
 7. **northwoods:** export the existing `/mnt/storage` volume over NFS and create `/mnt/storage/k8s`. Nothing is formatted; `/mnt/storage` must already be mounted.
 
    ```bash
