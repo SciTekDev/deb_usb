@@ -8,7 +8,19 @@
 
 Each node has four NICs. NIC 0 is the one holding the default route; it gets the cluster IP, gateway and DNS, and kubelet is pinned to it with `--node-ip`. The other NICs follow in name order with the extra addresses and no gateway. All 12 addresses are listed explicitly in `NODE_NIC_IPS` in `cluster.env`.
 
-Settings (versions, IPs, CIDR, gateway) live in `cluster.env`. Run the scripts as root (`su -`) from this directory on the USB SCRIPTS partition. `sudo` is not assumed to be installed.
+Settings (versions, IPs, CIDR, gateway) live in `cluster.env`. `sudo` is not assumed to be installed.
+
+## Running the scripts
+
+Become root with a **login shell**, then change to this directory (the USB SCRIPTS partition):
+
+```bash
+su -          # NOT plain "su"
+cd /path/to/scripts/k8s
+bash 01-prep-node.sh
+```
+
+Plain `su` keeps your user's `PATH`, which has no `/sbin` or `/usr/sbin`, so scripts fail with errors like `swapoff: command not found`. `su -` gives root's own `PATH`. Check with `echo $PATH`: it should contain `/usr/sbin`. Every command in the steps below is run from this root shell.
 
 ## Steps
 
