@@ -12,7 +12,8 @@ Run from northwoods as your normal user with `kubectl` working. Edit `deployment
 ## Steps
 
 ```bash
-bash 01-platform.sh   # helm, ingress-nginx, cert-manager, NFS default StorageClass
+bash 00-install-helm.sh   # as ROOT (su -) on northwoods, once; the rest run as your normal user
+bash 01-platform.sh   # ingress-nginx, cert-manager, NFS default StorageClass
 bash 02-gitlab.sh     # GitLab CE; prints the initial root password
 bash 03-jenkins.sh    # Jenkins LTS; prints the initial admin password
 bash 04-rancher.sh    # Rancher; prints the bootstrap password

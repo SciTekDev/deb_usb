@@ -2,14 +2,14 @@
 set -euo pipefail
 
 # Run on northwoods as your normal user (kubectl configured).
-# Installs helm, ingress-nginx (hostNetwork on the web node), cert-manager,
-# and an NFS-backed default StorageClass.
+# Installs ingress-nginx (hostNetwork on the web node), cert-manager,
+# and an NFS-backed default StorageClass. Needs helm: run 00-install-helm.sh as root first.
 
 source "$(dirname "${BASH_SOURCE[0]}")/deployments.env"
 
 if ! command -v helm >/dev/null; then
-    echo "Installing helm..."
-    curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    echo "helm is not installed. As root (su -) on northwoods run: bash 00-install-helm.sh"
+    exit 1
 fi
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
