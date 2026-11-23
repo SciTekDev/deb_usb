@@ -25,9 +25,23 @@ if lspci -d 10de: | grep -qiE 'GK210|Tesla K80'; then
 else
     drivers="nvidia-driver"
 fi
-apt install -y linux-headers-amd64 $drivers nvidia-persistenced firmware-misc-nonfree
-# Keep the driver loaded between jobs (starts at boot, once the module is available after the reboot)
-systemctl enable nvidia-persistenced
+apt install -y linux-headers-amd64 $drivers firmware-misc-nonfree
+# Debian's nvidia-persistenced (550) cannot manage the legacy 470 driver, so set persistence mode with nvidia-smi at boot
+cat > /etc/systemd/system/nvidia-persistence.service <<EOF
+[Unit]
+Description=Enable NVIDIA persistence mode
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nvidia-smi -pm 1
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable nvidia-persistence.service
 
 echo "Installing NVIDIA container toolkit..."
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
