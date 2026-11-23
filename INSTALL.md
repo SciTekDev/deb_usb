@@ -16,7 +16,7 @@ flowchart TB
     subgraph cluster[Kubernetes cluster, flannel pod network 10.244.0.0/16]
         subgraph north["northwoods 10.0.0.4<br/>control plane + storage (role=storage)"]
             api[kube-apiserver / etcd]
-            nfs[(NFS server<br/>/srv/data/diskN)]
+            nfs[(NFS server<br/>/mnt/storage)]
             nfsprov[NFS provisioner<br/>default StorageClass]
             es[Elasticsearch<br/>local disk /var/lib/elasticsearch]
             fb1[Filebeat]
@@ -133,10 +133,10 @@ Do this before the deployments, which need the NFS directory.
 
 ```bash
 cd /mnt/k8s
-bash 06-setup-storage-node.sh /dev/sdb /dev/sdc   # erases the listed disks
+bash 06-setup-storage-node.sh
 ```
 
-This formats and mounts each disk at `/srv/data/diskN`, exports them over NFS, and creates `/srv/data/disk1/k8s`.
+This exports the existing `/mnt/storage` volume over NFS (nothing is formatted) and creates `/mnt/storage/k8s`.
 
 ## Phase 4: Kubernetes cluster
 

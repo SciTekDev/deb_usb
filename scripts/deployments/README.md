@@ -4,7 +4,7 @@ Run from northwoods as your normal user with `kubectl` working. Edit `deployment
 
 ## Prerequisites
 
-- `k8s/06-setup-storage-node.sh` has run on northwoods, which also creates the NFS directory `/srv/data/disk1/k8s` used for persistent volumes.
+- `k8s/06-setup-storage-node.sh` has run on northwoods, which also creates the NFS directory `/mnt/storage/k8s` used for persistent volumes.
 - Every node needs `nfs-common` to mount NFS volumes (`01-prep-node.sh` installs it).
 - Resolve `gitlab.`, `jenkins.` and `rancher.` under your domain to the ingress IP (eastwoods, 10.0.0.6) using DNS or `/etc/hosts` on your workstation.
 - GitLab wants at least 4 GB of free RAM on eastwoods.

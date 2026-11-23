@@ -66,10 +66,10 @@ Plain `su` keeps your user's `PATH`, which has no `/sbin` or `/usr/sbin`, so scr
    kubectl apply -f manifests/nvidia-device-plugin.yaml
    ```
 
-7. **northwoods:** format data disks and export them over NFS. This erases the listed disks.
+7. **northwoods:** export the existing `/mnt/storage` volume over NFS and create `/mnt/storage/k8s`. Nothing is formatted; `/mnt/storage` must already be mounted.
 
    ```bash
-   bash 06-setup-storage-node.sh /dev/sdb /dev/sdc
+   bash 06-setup-storage-node.sh
    ```
 
 ## Verify
